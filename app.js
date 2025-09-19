@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/tasks', tasksController.getAllTasks);
+app.get('/tasks', tasksController.getTasks);
 app.get('/tasks/:id', tasksController.getTaskById);
 app.post('/tasks', tasksController.createTask);
 app.put('/tasks/:id', tasksController.updateTask);

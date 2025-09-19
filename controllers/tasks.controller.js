@@ -15,7 +15,7 @@ module.exports.createTask = (req, res) => {
   return res.status(201).send({ message: 'Task created' });
 };
 
-module.exports.takeTaskById = (req, res) => {
+module.exports.getTaskById = (req, res) => {
   const { id } = req.params;
   const findedTask = TaskDb.takeTaskById(id);
 

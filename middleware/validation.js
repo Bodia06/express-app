@@ -2,7 +2,6 @@ const {
   CREATE_TASK_VALIDATION_SCHEMA,
   UPDATE_TASK_VALIDATION_SCHEMA,
 } = require('../utils/validationSchemas');
-const { validationError } = require('../utils/errors');
 
 module.exports.validationTaskOnCreate = async (req, res, next) => {
   const { body } = req;
@@ -12,7 +11,7 @@ module.exports.validationTaskOnCreate = async (req, res, next) => {
     req.body = validatedTask;
     next();
   } catch (err) {
-    return validationError(err, res);
+    next(err);
   }
 
   next();
@@ -26,7 +25,7 @@ module.exports.validationTaskOnUpdate = async (req, res, next) => {
     req.body = validatedTask;
     next();
   } catch (err) {
-    return validationError(err, res);
+    next(err);
   }
 
   next();

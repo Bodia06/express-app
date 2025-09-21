@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { TaskDb } = require('../models');
 
 module.exports.getTasks = (req, res) => {
@@ -5,49 +6,49 @@ module.exports.getTasks = (req, res) => {
   res.status(200).send(tasks);
 };
 
-module.exports.createTask = (req, res) => {
+module.exports.createTask = (req, res, next) => {
   const { body } = req.body;
 
   if (!body) {
-    return res.status(400).send({ message: 'Body is required' });
+    next(createError(400, 'Body is required'));
   }
   TaskDb.createTask(body);
   return res.status(201).send(TaskDb.getAllTasks());
 };
 
-module.exports.getTaskById = (req, res) => {
+module.exports.getTaskById = (req, res, next) => {
   const { id } = req.params;
   const findedTask = TaskDb.takeTaskById(id);
 
   if (!findedTask) {
-    return res.status(404).send({ message: 'Task not found' });
+    next(createError(404, 'Task not found'));
   }
   return res.status(200).send(findedTask);
 };
 
-module.exports.updateTask = (req, res) => {
+module.exports.updateTask = (req, res, next) => {
   const { id } = req.params;
   const { body, isDone } = req.body;
 
   const findedTask = TaskDb.takeTaskById(id);
 
   if (!findedTask) {
-    return res.status(404).send({ message: 'Task not found' });
+    next(createError(404, 'Task not found'));
   }
   if (body === undefined || isDone === undefined) {
-    return res.status(400).send({ message: 'Body and isDone is required' });
+    next(createError(400, 'Body and isDone is required'));
   }
   TaskDb.updateTask(id, body, isDone);
   return res.status(200).send(TaskDb.getAllTasks());
 };
 
-module.exports.deleteTask = (req, res) => {
+module.exports.deleteTask = (req, res, next) => {
   const { id } = req.params;
 
   const findedTask = TaskDb.takeTaskById(id);
 
   if (!findedTask) {
-    return res.status(404).send({ message: 'Task not found' });
+    next(createError(404, 'Task not found'));
   }
   TaskDb.deleteTask(id);
   return res.status(200).send(TaskDb.getAllTasks());

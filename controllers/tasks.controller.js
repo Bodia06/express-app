@@ -34,6 +34,9 @@ module.exports.updateTask = (req, res) => {
   if (!findedTask) {
     return res.status(404).send({ message: 'Task not found' });
   }
+  if (body === undefined || isDone === undefined) {
+    return res.status(400).send({ message: 'Body and isDone is required' });
+  }
   TaskDb.updateTask(id, body, isDone);
   return res.status(200).send(TaskDb.getAllTasks());
 };

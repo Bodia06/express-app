@@ -12,7 +12,7 @@ module.exports.createTask = (req, res) => {
     return res.status(400).send({ message: 'Body is required' });
   }
   TaskDb.createTask(body);
-  return res.status(201).send({ message: 'Task created' });
+  return res.status(201).send(TaskDb.getAllTasks());
 };
 
 module.exports.getTaskById = (req, res) => {
@@ -35,7 +35,7 @@ module.exports.updateTask = (req, res) => {
     return res.status(404).send({ message: 'Task not found' });
   }
   TaskDb.updateTask(id, body, isDone);
-  return res.status(200).send({ message: 'Task updated' });
+  return res.status(200).send(TaskDb.getAllTasks());
 };
 
 module.exports.deleteTask = (req, res) => {
@@ -47,5 +47,5 @@ module.exports.deleteTask = (req, res) => {
     return res.status(404).send({ message: 'Task not found' });
   }
   TaskDb.deleteTask(id);
-  return res.status(200).send({ message: 'Task deleted' });
+  return res.status(200).send(TaskDb.getAllTasks());
 };

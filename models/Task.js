@@ -11,6 +11,56 @@ const tasksDB = [
     body: 'Task 2',
     isDone: true,
   },
+  {
+    id: 2,
+    body: 'Task 3',
+    isDone: false,
+  },
+  {
+    id: 3,
+    body: 'Task 4',
+    isDone: true,
+  },
+  {
+    id: 4,
+    body: 'Task 5',
+    isDone: false,
+  },
+  {
+    id: 5,
+    body: 'Task 6',
+    isDone: true,
+  },
+  {
+    id: 6,
+    body: 'Task 7',
+    isDone: false,
+  },
+  {
+    id: 7,
+    body: 'Task 8',
+    isDone: true,
+  },
+  {
+    id: 8,
+    body: 'Task 9',
+    isDone: false,
+  },
+  {
+    id: 9,
+    body: 'Task 10',
+    isDone: true,
+  },
+  {
+    id: 10,
+    body: 'Task 11',
+    isDone: false,
+  },
+  {
+    id: 11,
+    body: 'Task 12',
+    isDone: true,
+  },
 ];
 
 class TasksDB {
@@ -18,8 +68,11 @@ class TasksDB {
     this.tasks = arr;
   }
 
-  getAllTasks () {
-    return [...this.tasks];
+  getAllTasks (page, results) {
+    if (!page || !results) {
+      return [...this.tasks];
+    }
+    return [...this.tasks.splice((page - 1) * results, page * results)];
   }
 
   createTask (body) {
